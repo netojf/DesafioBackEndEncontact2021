@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TesteBackendEnContact.Core.Domain.ContactBook.Company;
-using TesteBackendEnContact.Core.Interface.ContactBook.Company;
+using TesteBackendEnContact.Core.Domain.Company;
+using TesteBackendEnContact.Core.Interface.Company;
 using TesteBackendEnContact.Database;
 using TesteBackendEnContact.Repository.Interface;
 

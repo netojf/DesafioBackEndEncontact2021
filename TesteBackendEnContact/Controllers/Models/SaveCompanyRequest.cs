@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TesteBackendEnContact.Core.Domain.ContactBook.Company;
-using TesteBackendEnContact.Core.Interface.ContactBook.Company;
+using TesteBackendEnContact.Core.Domain.Company;
+using TesteBackendEnContact.Core.Interface.Company;
 
 namespace TesteBackendEnContact.Controllers.Models
 {
