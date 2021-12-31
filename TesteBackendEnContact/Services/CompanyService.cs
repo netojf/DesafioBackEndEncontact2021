@@ -7,11 +7,12 @@ using System.Text;
 using CsvHelper;
 using Microsoft.Extensions.Logging;
 using TesteBackendEnContact.Core.Domain.Company;
+using TesteBackendEnContact.Interfaces.Services;
 using TesteBackendEnContact.Mappers;
 
 namespace TesteBackendEnContact.Services
 {
-    public class CompanyService : ICsvParserService<Company>
+    public class CompanyService : ICompanyService
     {
 
         private readonly ILogger<CompanyService> _logger;

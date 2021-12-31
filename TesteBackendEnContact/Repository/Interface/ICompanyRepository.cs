@@ -1,14 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using TesteBackendEnContact.Core.Interface.Company;
+﻿using TesteBackendEnContact.Core.Domain.Company;
 
 namespace TesteBackendEnContact.Repository.Interface
 {
-    public interface ICompanyRepository
+    public interface ICompanyRepository : IRepository<Company>
     {
-        Task<ICompany> SaveAsync(ICompany company);
-        Task DeleteAsync(int id);
-        Task<IEnumerable<ICompany>> GetAllAsync();
-        Task<ICompany> GetAsync(int id);
     }
 }

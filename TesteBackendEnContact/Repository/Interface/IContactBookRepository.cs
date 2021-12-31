@@ -1,14 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using TesteBackendEnContact.Core.Interface.ContactBook;
+﻿using TesteBackendEnContact.Core.Domain.ContactBook;
 
 namespace TesteBackendEnContact.Repository.Interface
 {
-    public interface IContactBookRepository
+    public interface IContactBookRepository : IRepository<ContactBook>
     {
-        Task<IContactBook> SaveAsync(IContactBook contactBook);
-        Task DeleteAsync(int id);
-        Task<IEnumerable<IContactBook>> GetAllAsync();
-        Task<IContactBook> GetAsync(int id);
     }
 }

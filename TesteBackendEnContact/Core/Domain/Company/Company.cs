@@ -1,24 +1,38 @@
-﻿using CsvHelper.Configuration.Attributes;
-using TesteBackendEnContact.Core.Interface.Company;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using CsvHelper.Configuration.Attributes;
+using Dapper.Contrib.Extensions;
 
 namespace TesteBackendEnContact.Core.Domain.Company
 {
-    public class Company : ICompany
+    [Table("Company")]
+    public class Company
     {
         [Name("Id")]
         public int Id { get; private set; }
 
         [Name("ContactBookId")]
-        public int ContactBookId { get; private set; }
+        [Required]
+        public int? ContactBookId { get; private set; }
 
         [Name("Name")]
+        [Required]
+        [StringLength(50)]
         public string Name { get; private set; }
 
-        public Company(int id, int contactBookId, string name)
+
+        public Company()
         {
-            Id = id;
-            ContactBookId = contactBookId;
-            Name = name;
         }
+
+        [JsonConstructorAttribute]
+        public Company(string Name, int? ContactBookId)
+        {
+            this.Name = Name;
+            this.ContactBookId = ContactBookId;
+
+        }
+
+
     }
 }

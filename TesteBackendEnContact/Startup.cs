@@ -8,8 +8,10 @@ using Microsoft.OpenApi.Models;
 
 using System;
 using TesteBackendEnContact.Database;
+using TesteBackendEnContact.Interfaces.Services;
 using TesteBackendEnContact.Repository;
 using TesteBackendEnContact.Repository.Interface;
+using TesteBackendEnContact.Services;
 
 namespace TesteBackendEnContact
 {
@@ -29,6 +31,7 @@ namespace TesteBackendEnContact
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TesteBackendEnContact", Version = "v1" });
+                c.OperationFilter<SwaggerFileOperationFilter>();
             });
 
             services.AddFluentMigratorCore()
@@ -39,8 +42,11 @@ namespace TesteBackendEnContact
                     .AddLogging(lb => lb.AddFluentMigratorConsole());
 
             services.AddSingleton(new DatabaseConfig { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
-            services.AddScoped<IContactBookRepository, ContactBookRepository>();
-            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IContactBookService, ContactBookService>();
+            services.AddScoped<ICompanyService, CompanyService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +56,11 @@ namespace TesteBackendEnContact
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TesteBackendEnContact v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TesteBackendEnContact v1");
+                    c.RoutePrefix = String.Empty;
+                });
             }
 
             app.UseRouting();

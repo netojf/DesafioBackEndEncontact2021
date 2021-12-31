@@ -1,91 +1,46 @@
-﻿using Dapper;
-using Dapper.Contrib.Extensions;
-using Microsoft.Data.Sqlite;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 using TesteBackendEnContact.Core.Domain.Company;
-using TesteBackendEnContact.Core.Interface.Company;
-using TesteBackendEnContact.Database;
+using TesteBackendEnContact.DAO;
 using TesteBackendEnContact.Repository.Interface;
 
 namespace TesteBackendEnContact.Repository
 {
-    public class CompanyRepository : ICompanyRepository
+    internal class CompanyRepository : RepositoryBase, ICompanyRepository
     {
-        private readonly DatabaseConfig databaseConfig;
+        CompanyDAO _companyDAO;
 
-        public CompanyRepository(DatabaseConfig databaseConfig)
+        public CompanyRepository(IDbTransaction transaction) : base(transaction)
         {
-            this.databaseConfig = databaseConfig;
-        }
-
-        public async Task<ICompany> SaveAsync(ICompany company)
-        {
-            using var connection = new SqliteConnection(databaseConfig.ConnectionString);
-            var dao = new CompanyDao(company);
-
-            if (dao.Id == 0)
-                dao.Id = await connection.InsertAsync(dao);
-            else
-                await connection.UpdateAsync(dao);
-
-            return dao.Export();
+            _companyDAO = new CompanyDAO(transaction);
         }
 
         public async Task DeleteAsync(int id)
         {
-            using var connection = new SqliteConnection(databaseConfig.ConnectionString);
-            using var transaction = connection.BeginTransaction();
-
-            var sql = new StringBuilder();
-            sql.AppendLine("DELETE FROM Company WHERE Id = @id;");
-            sql.AppendLine("UPDATE Contact SET CompanyId = null WHERE CompanyId = @id;");
-
-            await connection.ExecuteAsync(sql.ToString(), new { id }, transaction);
+            await _companyDAO.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<ICompany>> GetAllAsync()
+        public async Task<IEnumerable<Company>> GetAllAsync()
         {
-            using var connection = new SqliteConnection(databaseConfig.ConnectionString);
-
-            var query = "SELECT * FROM Company";
-            var result = await connection.QueryAsync<CompanyDao>(query);
-
-            return result?.Select(item => item.Export());
+            return await _companyDAO.GetAllAsync();
         }
 
-        public async Task<ICompany> GetAsync(int id)
+        public Task<Company> GetAsync(int id)
         {
-            using var connection = new SqliteConnection(databaseConfig.ConnectionString);
-
-            var query = "SELECT * FROM Conpany where Id = @id";
-            var result = await connection.QuerySingleOrDefaultAsync<CompanyDao>(query, new { id });
-
-            return result?.Export();
+            return _companyDAO.GetAsync(id);
         }
+
+        public async Task<Company> SaveAsync(Company model)
+        {
+            if (model == null)
+                throw new ArgumentNullException("entity");
+
+            return await _companyDAO.SaveAsync(model);
+        }
+
+
     }
 
-    [Table("Company")]
-    public class CompanyDao : ICompany
-    {
-        [Key]
-        public int Id { get; set; }
-        public int ContactBookId { get; set; }
-        public string Name { get; set; }
-
-        public CompanyDao()
-        {
-        }
-
-        public CompanyDao(ICompany company)
-        {
-            Id = company.Id;
-            ContactBookId = company.ContactBookId;
-            Name = company.Name;
-        }
-
-        public ICompany Export() => new Company(Id, ContactBookId, Name);
-    }
 }

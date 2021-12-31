@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TesteBackendEnContact.Core.Domain.ContactBook;
-using TesteBackendEnContact.Core.Interface.ContactBook;
 using TesteBackendEnContact.Repository.Interface;
 
 namespace TesteBackendEnContact.Controllers
@@ -13,34 +12,36 @@ namespace TesteBackendEnContact.Controllers
     public class ContactBookController : ControllerBase
     {
         private readonly ILogger<ContactBookController> _logger;
+        IUnitOfWork _unitOfWork;
 
-        public ContactBookController(ILogger<ContactBookController> logger)
+        public ContactBookController(ILogger<ContactBookController> logger, IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
         [HttpPost]
-        public async Task<IContactBook> Post(ContactBook contactBook, [FromServices] IContactBookRepository contactBookRepository)
+        public async Task<ContactBook> Post(ContactBook contactBook)
         {
-            return await contactBookRepository.SaveAsync(contactBook);
+            return await _unitOfWork.ContactBookRepository.SaveAsync(contactBook);
         }
 
         [HttpDelete]
-        public async Task Delete(int id, [FromServices] IContactBookRepository contactBookRepository)
+        public async Task Delete(int id)
         {
-            await contactBookRepository.DeleteAsync(id);
+            await _unitOfWork.ContactBookRepository.DeleteAsync(id);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<IContactBook>> Get([FromServices] IContactBookRepository contactBookRepository)
+        public async Task<IEnumerable<ContactBook>> Get()
         {
-            return await contactBookRepository.GetAllAsync();
+            return await _unitOfWork.ContactBookRepository.GetAllAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<IContactBook> Get(int id, [FromServices] IContactBookRepository contactBookRepository)
+        public async Task<ContactBook> Get(int id)
         {
-            return await contactBookRepository.GetAsync(id);
+            return await _unitOfWork.ContactBookRepository.GetAsync(id);
         }
     }
 }

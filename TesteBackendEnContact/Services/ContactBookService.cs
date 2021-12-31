@@ -7,11 +7,12 @@ using System.Text;
 using CsvHelper;
 using Microsoft.Extensions.Logging;
 using TesteBackendEnContact.Core.Domain.ContactBook;
+using TesteBackendEnContact.Interfaces.Services;
 using TesteBackendEnContact.Mappers;
 
 namespace TesteBackendEnContact.Services
 {
-    public class ContactBookService : ICsvParserService<ContactBook>
+    public class ContactBookService : IContactBookService
     {
 
         private readonly ILogger<ContactBookService> _logger;
