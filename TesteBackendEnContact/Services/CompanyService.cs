@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.Extensions.Logging;
 using TesteBackendEnContact.Core.Domain.Company;
 using TesteBackendEnContact.Interfaces.Services;
@@ -62,12 +63,18 @@ namespace TesteBackendEnContact.Services
             }
         }
 
-        List<Company> ICsvParserService<Company>.ReadCsvFileToEmployeeModel(string path)
+        List<Company> ICsvParserService<Company>.ReadCsvFileToModel(string path)
         {
             try
             {
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true,
+                    PrepareHeaderForMatch = args => args.Header.ToLower()
+                };
+
                 using (var reader = new StreamReader(path, Encoding.Default))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                using (var csv = new CsvReader(reader, config))
                 {
                     csv.Context.RegisterClassMap<CompanyMap>();
                     var records = csv.GetRecords<Company>().ToList();

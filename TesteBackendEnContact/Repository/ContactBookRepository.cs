@@ -17,9 +17,9 @@ namespace TesteBackendEnContact.Repository
             _contactBookDAO = new ContactBookDAO(transaction);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            await _contactBookDAO.DeleteAsync(id);
+            return await _contactBookDAO.DeleteAsync(id);
         }
 
         public async Task<IEnumerable<ContactBook>> GetAllAsync()

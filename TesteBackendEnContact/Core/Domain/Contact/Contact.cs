@@ -9,7 +9,7 @@ namespace TesteBackendEnContact.Core.Domain.Contact
     {
         [Dapper.Contrib.Extensions.Key]
         [Name("Id")]
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         [Required]
         public int? ContactBookId { get; set; }

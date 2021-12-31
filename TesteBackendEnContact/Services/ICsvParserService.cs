@@ -4,7 +4,7 @@ namespace TesteBackendEnContact.Services
 {
     public interface ICsvParserService<T>
     {
-        List<T> ReadCsvFileToEmployeeModel(string path);
-        void WriteNewCsvFile(string path, List<T> employeeModels);
+        List<T> ReadCsvFileToModel(string path);
+        void WriteNewCsvFile(string path, List<T> models);
     }
 }

@@ -22,7 +22,7 @@ namespace TesteBackendEnContact.Services
             _logger = logger;
         }
 
-        public void WriteNewCsvFile(string path, List<ContactBook> ContactBookModels)
+        public void WriteNewCsvFile(string path, List<ContactBook> models)
         {
             using (StreamWriter sw = new StreamWriter(path, false, new UTF8Encoding(true)))
             using (CsvWriter cw = new CsvWriter(sw, CultureInfo.InvariantCulture))
@@ -41,7 +41,7 @@ namespace TesteBackendEnContact.Services
                     cw.NextRecord();
                 }
 
-                foreach (ContactBook comp in ContactBookModels)
+                foreach (ContactBook comp in models)
                 {
                     try
                     {
@@ -62,7 +62,7 @@ namespace TesteBackendEnContact.Services
             }
         }
 
-        List<ContactBook> ICsvParserService<ContactBook>.ReadCsvFileToEmployeeModel(string path)
+        List<ContactBook> ICsvParserService<ContactBook>.ReadCsvFileToModel(string path)
         {
             try
             {

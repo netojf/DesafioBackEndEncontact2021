@@ -5,12 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-
 using System;
 using TesteBackendEnContact.Database;
 using TesteBackendEnContact.Interfaces.Services;
-using TesteBackendEnContact.Repository;
-using TesteBackendEnContact.Repository.Interface;
 using TesteBackendEnContact.Services;
 
 namespace TesteBackendEnContact

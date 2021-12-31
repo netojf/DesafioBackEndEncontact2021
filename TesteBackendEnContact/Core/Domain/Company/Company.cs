@@ -8,17 +8,14 @@ namespace TesteBackendEnContact.Core.Domain.Company
     [Table("Company")]
     public class Company
     {
-        [Name("Id")]
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
-        [Name("ContactBookId")]
         [Required]
-        public int? ContactBookId { get; private set; }
+        public int? ContactBookId { get; set; }
 
-        [Name("Name")]
         [Required]
         [StringLength(50)]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
 
         public Company()

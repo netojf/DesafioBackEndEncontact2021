@@ -10,7 +10,7 @@ namespace TesteBackendEnContact.Repository.Interface
 
 
         Task<T> SaveAsync(T model);
-        Task DeleteAsync(int id);
+        Task<int> DeleteAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetAsync(int id);
 

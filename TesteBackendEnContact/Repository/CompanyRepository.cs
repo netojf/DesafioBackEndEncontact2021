@@ -17,9 +17,10 @@ namespace TesteBackendEnContact.Repository
             _companyDAO = new CompanyDAO(transaction);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            await _companyDAO.DeleteAsync(id);
+            return await _companyDAO.DeleteAsync(id);
+
         }
 
         public async Task<IEnumerable<Company>> GetAllAsync()

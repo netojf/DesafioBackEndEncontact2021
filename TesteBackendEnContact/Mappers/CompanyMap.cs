@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CsvHelper.Configuration;
 using TesteBackendEnContact.Core.Domain.Company;
 
@@ -11,9 +7,9 @@ namespace TesteBackendEnContact.Mappers
     {
         public CompanyMap()
         {
-            Map(m => m.Id).Name("Id");
-            Map(m => m.ContactBookId).Name("ContactBookId");
-            Map(m => m.Name).Name("Name");
+            Map(m => m.Id).Name("id");
+            Map(m => m.ContactBookId).Name("contactbookid");
+            Map(m => m.Name).Name("name");
         }
     }
 }
