@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TesteBackendEnContact.Core.Domain.Company;
 using TesteBackendEnContact.Repository.Interface;
 
 namespace TesteBackendEnContact
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        ICompanyRepository CompanyRepository { get; }
-        IContactBookRepository ContactBookRepository { get; }
+	public interface IUnitOfWork : IDisposable
+	{
+		ICompanyRepository CompanyRepository { get; }
+		IContactBookRepository ContactBookRepository { get; }
+		IContactRepository ContactRepository { get; }
 
-        void Commit();
-    }
+		void Commit();
+	}
 }

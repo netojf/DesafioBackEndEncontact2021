@@ -3,8 +3,7 @@ using TesteBackendEnContact.Services;
 
 namespace TesteBackendEnContact.Interfaces.Services
 {
-    public interface ICompanyService : ICsvParserService<Company>
-    {
-
-    }
+	public interface ICompanyService : ICsvParserService<Company> 
+	{
+	}
 }

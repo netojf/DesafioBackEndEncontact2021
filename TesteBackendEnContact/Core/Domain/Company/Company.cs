@@ -1,35 +1,40 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Dapper.Contrib.Extensions;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using CsvHelper.Configuration.Attributes;
-using Dapper.Contrib.Extensions;
 
 namespace TesteBackendEnContact.Core.Domain.Company
 {
-    [Table("Company")]
-    public class Company
-    {
-        public int Id { get; set; }
+	[Dapper.Contrib.Extensions.Table("Company")]
+	public class Company
+	{
+		[Dapper.Contrib.Extensions.Key]
+		public int Id { get; set; }
 
-        [Required]
-        public int? ContactBookId { get; set; }
+		[Required]
+		//[ForeignKey("ContactBook")]
+		public int? ContactBookId { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
+		[Required]
+		[StringLength(50)]
+		public string Name { get; set; }
 
+		//[JsonIgnore]
+		//public virtual ContactBook.ContactBook ContactBook { get; set; }
 
-        public Company()
-        {
-        }
+		//[JsonIgnore]
+		//public virtual ICollection<Contact.Contact> Contacts { get; set; }
 
-        [JsonConstructorAttribute]
-        public Company(string Name, int? ContactBookId)
-        {
-            this.Name = Name;
-            this.ContactBookId = ContactBookId;
+		public Company()
+		{
+		}
 
-        }
-
-
-    }
+		[JsonConstructor]
+		public Company(string Name, int? ContactBookId)
+		{
+			this.Name = Name;
+			this.ContactBookId = ContactBookId;
+		}
+	}
 }
